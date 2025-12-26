@@ -1,6 +1,6 @@
 namespace dotnet_project.DTOs.User;
 
-// Kullanıcı yanıt DTO'su (şifre gibi hassas bilgiler dahil değil)
+// Kullanıcı yanıt DTO'su. şifre dahil değil
 public class UserResponseDto
 {
     public int Id { get; set; }

@@ -1,13 +1,12 @@
 namespace dotnet_project.DTOs;
 
-// Tüm API yanıtları için standart wrapper sınıfı
+// API yanıtları wrapper sınıfı
 public class ApiResponse<T>
 {
     public bool Success { get; set; }
     public string? Message { get; set; }
     public T? Data { get; set; }
-
-    // Başarılı yanıt oluşturur
+    // Başarılı 
     public static ApiResponse<T> SuccessResponse(T data, string message = "İşlem başarılı")
     {
         return new ApiResponse<T>
@@ -17,8 +16,7 @@ public class ApiResponse<T>
             Data = data
         };
     }
-
-    // Hata yanıtı oluşturur
+    // Hata 
     public static ApiResponse<T> ErrorResponse(string message)
     {
         return new ApiResponse<T>

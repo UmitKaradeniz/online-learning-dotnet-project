@@ -1,6 +1,5 @@
 namespace dotnet_project.DTOs.User;
 
-// Kullanıcı güncelleme DTO'su
 public class UpdateUserDto
 {
     public string? FirstName { get; set; }

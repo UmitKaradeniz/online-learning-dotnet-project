@@ -1,6 +1,5 @@
 namespace dotnet_project.DTOs.User;
 
-// Yeni kullanıcı oluşturma DTO'su
 public class CreateUserDto
 {
     public string? FirstName { get; set; }
