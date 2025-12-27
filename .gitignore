@@ -26,3 +26,6 @@ packages/
 # OS
 Thumbs.db
 .DS_Store
+
+# Migrations
+**/Migrations/
