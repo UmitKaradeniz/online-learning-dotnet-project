@@ -43,9 +43,11 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         await _context.SaveChangesAsync();
     }
 
+    // Soft delete - kayıt silinmez IsDeleted = true yapılır
     public async Task DeleteAsync(T entity)
     {
-        _dbSet.Remove(entity);
+        entity.IsDeleted = true;
+        _dbSet.Update(entity);
         await _context.SaveChangesAsync();
     }
 

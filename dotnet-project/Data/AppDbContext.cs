@@ -18,6 +18,12 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        // sorgu filtreleri - soft delete 
+        modelBuilder.Entity<User>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Course>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Lesson>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Enrollment>().HasQueryFilter(e => !e.IsDeleted);
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -68,6 +74,68 @@ public class AppDbContext : DbContext
                   .HasForeignKey(e => e.CourseId)
                   .OnDelete(DeleteBehavior.Cascade);
         });
+
+        // Seed Data - başlangıç verileri
+        modelBuilder.Entity<User>().HasData(
+            new User
+            {
+                Id = 1,
+                FirstName = "Admin",
+                LastName = "User",
+                Email = "admin@example.com",
+                PasswordHash = "admin123", 
+                CreatedAt = new DateTime(2024, 1, 1),
+                UpdatedAt = new DateTime(2024, 1, 1)
+            },
+            new User
+            {
+                Id = 2,
+                FirstName = "Test",
+                LastName = "Öğrenci",
+                Email = "student@example.com",
+                PasswordHash = "student123",
+                CreatedAt = new DateTime(2024, 1, 1),
+                UpdatedAt = new DateTime(2024, 1, 1)
+            }
+        );
+
+        modelBuilder.Entity<Course>().HasData(
+            new Course
+            {
+                Id = 1,
+                Title = "C# Programlama",
+                Description = "Başlangıç düzeyi C# eğitimi",
+                Price = 199.99m,
+                InstructorId = 1,
+                CreatedAt = new DateTime(2024, 1, 1),
+                UpdatedAt = new DateTime(2024, 1, 1)
+            }
+        );
+
+        modelBuilder.Entity<Lesson>().HasData(
+            new Lesson
+            {
+                Id = 1,
+                Title = "Değişkenler ve Veri Tipleri",
+                Content = "C# dilinde değişken tanımlama ve temel veri tipleri",
+                Duration = 45,
+                Order = 1,
+                CourseId = 1,
+                CreatedAt = new DateTime(2024, 1, 1),
+                UpdatedAt = new DateTime(2024, 1, 1)
+            },
+            new Lesson
+            {
+                Id = 2,
+                Title = "Kontrol Yapıları",
+                Content = "if-else, switch-case ve döngüler",
+                Duration = 60,
+                Order = 2,
+                CourseId = 1,
+                CreatedAt = new DateTime(2024, 1, 1),
+                UpdatedAt = new DateTime(2024, 1, 1)
+            }
+        );
     }
 
     public override int SaveChanges()
