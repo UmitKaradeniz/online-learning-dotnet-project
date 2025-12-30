@@ -4,6 +4,7 @@ using dotnet_project.Data;
 using dotnet_project.Data.Repositories;
 using dotnet_project.Services;
 using dotnet_project.Services.Interfaces;
+using dotnet_project.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,5 +38,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+// minimal api
+app.MapMinimalApiEndpoints();
 
 app.Run();
