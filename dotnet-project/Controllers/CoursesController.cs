@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using dotnet_project.DTOs;
 using dotnet_project.DTOs.Course;
@@ -33,6 +34,7 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")] // Sadece Admin
     public async Task<ActionResult<ApiResponse<CourseResponseDto>>> Create(CreateCourseDto dto)
     {
         var result = await _courseService.CreateAsync(dto);
@@ -42,6 +44,7 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ApiResponse<CourseResponseDto>>> Update(int id, UpdateCourseDto dto)
     {
         var result = await _courseService.UpdateAsync(id, dto);
@@ -51,6 +54,7 @@ public class CoursesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ApiResponse<bool>>> Delete(int id)
     {
         var result = await _courseService.DeleteAsync(id);

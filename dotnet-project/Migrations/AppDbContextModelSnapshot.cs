@@ -206,6 +206,10 @@ namespace dotnet_project.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -222,22 +226,24 @@ namespace dotnet_project.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "admin@example.com",
+                            Email = "admin@gmail.com",
                             FirstName = "Admin",
                             IsDeleted = false,
                             LastName = "User",
-                            PasswordHash = "admin123",
+                            PasswordHash = "yalovauni",
+                            Role = "Admin",
                             UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "student@example.com",
+                            Email = "student@gmail.com",
                             FirstName = "Test",
                             IsDeleted = false,
                             LastName = "Öğrenci",
-                            PasswordHash = "student123",
+                            PasswordHash = "yalovastudent",
+                            Role = "User",
                             UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });

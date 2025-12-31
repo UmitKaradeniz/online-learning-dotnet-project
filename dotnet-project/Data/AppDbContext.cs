@@ -82,8 +82,9 @@ public class AppDbContext : DbContext
                 Id = 1,
                 FirstName = "Admin",
                 LastName = "User",
-                Email = "admin@example.com",
-                PasswordHash = "admin123", 
+                Email = "admin@gmail.com",
+                PasswordHash = "yalovauni",
+                Role = "Admin", // Admin rolü
                 CreatedAt = new DateTime(2024, 1, 1),
                 UpdatedAt = new DateTime(2024, 1, 1)
             },
@@ -92,8 +93,9 @@ public class AppDbContext : DbContext
                 Id = 2,
                 FirstName = "Test",
                 LastName = "Öğrenci",
-                Email = "student@example.com",
-                PasswordHash = "student123",
+                Email = "student@gmail.com",
+                PasswordHash = "yalovastudent",
+                Role = "User", // Normal kullanıcı
                 CreatedAt = new DateTime(2024, 1, 1),
                 UpdatedAt = new DateTime(2024, 1, 1)
             }

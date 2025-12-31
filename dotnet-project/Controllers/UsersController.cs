@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using dotnet_project.DTOs;
 using dotnet_project.DTOs.User;
@@ -7,6 +8,7 @@ namespace dotnet_project.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize] // JWT kısmı
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
