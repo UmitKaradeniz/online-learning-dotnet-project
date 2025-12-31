@@ -3,13 +3,26 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using dotnet_project.Data;
 using dotnet_project.Data.Repositories;
 using dotnet_project.Services;
 using dotnet_project.Services.Interfaces;
 using dotnet_project.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+// Serilog 
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+try
+{
+    Log.Information("Uygulama başlatılıyor...");
+
+    var builder = WebApplication.CreateBuilder(args);
+    builder.Host.UseSerilog();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -99,4 +112,14 @@ app.MapControllers();
 // minimal api
 app.MapMinimalApiEndpoints();
 
-app.Run();
+    Log.Information("Uygulama başarıyla başlatıldı");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Uygulama başlatılırken hata oluştu");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

@@ -13,23 +13,33 @@ public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
+    private readonly ILogger<AuthService> _logger;
 
-    public AuthService(IUserRepository userRepository, IConfiguration configuration)
+    public AuthService(IUserRepository userRepository, IConfiguration configuration, ILogger<AuthService> logger)
     {
         _userRepository = userRepository;
         _configuration = configuration;
+        _logger = logger;
     }
 
     public async Task<ApiResponse<LoginResponseDto>> LoginAsync(LoginDto dto)
     {
+        _logger.LogInformation("Login denemesi: {Email}", dto.Email);
+        
         // Email ile
         var user = await _userRepository.GetByEmailAsync(dto.Email);
         if (user == null)
+        {
+            _logger.LogWarning("Başarısız giriş - kullanıcı bulunamadı: {Email}", dto.Email);
             return ApiResponse<LoginResponseDto>.ErrorResponse("Email veya şifre hatalı");
+        }
 
         // Şifre kontrolü
         if (user.PasswordHash != dto.Password)
+        {
+            _logger.LogWarning("Başarısız giriş - hatalı şifre: {Email}", dto.Email);
             return ApiResponse<LoginResponseDto>.ErrorResponse("Email veya şifre hatalı");
+        }
 
         // JWT token
         var token = GenerateJwtToken(user.Id, user.Email!, user.Role);
@@ -44,6 +54,7 @@ public class AuthService : IAuthService
             ExpiresAt = DateTime.UtcNow.AddMinutes(expirationMinutes)
         };
 
+        _logger.LogInformation("Başarılı giriş: {Email}, Rol: {Role}", user.Email, user.Role);
         return ApiResponse<LoginResponseDto>.SuccessResponse(response, "Giriş başarılı");
     }
 
